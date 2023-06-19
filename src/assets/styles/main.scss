@@ -10,6 +10,7 @@ html {
 body {
   overflow-x: hidden;
   background: #1E1E1E;
+  font-family: 'Inter', sans-serif;
 }
 
 h1,
@@ -46,6 +47,7 @@ h6 {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  font-family: 'SF Pro Display', sans-serif;
 }
 
 .button-primary {
@@ -56,4 +58,27 @@ h6 {
 .button-secondary {
   color: $black;
   background: #fff;
+}
+
+.wrapper {
+  @include br(12px);
+  background: $black-primary;
+  border: 1px solid $border;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.input {
+  outline: none;
+  background: $black-primary;
+  @include br(4px);
+  border: 1px solid $border;
+  padding: 11px 12px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Inter', sans-serif;
+  color: #ffffffcf;
 }

@@ -13,5 +13,6 @@ declare module 'vue' {
     Modal: typeof import('./src/components/Modal.vue')['default']
     Navigation: typeof import('./src/components/Navigation.vue')['default']
     Search: typeof import('./src/components/Search.vue')['default']
+    Skeleton: typeof import('./src/components/Skeleton.vue')['default']
   }
 }
