@@ -1,18 +1,18 @@
 import {overFlow} from "../composables/mixins";
-import {CeilItem} from "../types/global.types";
+import {CeilItems} from "../types/global.types";
 import {useCookies} from '@vueuse/integrations/useCookies'
 
 interface stateType {
     ModalState: boolean
     isError: boolean
-    Cells: CeilItem[]
+    Cells: CeilItems[]
 }
 
 export const useMain = defineStore('main', {
     state: (): stateType => ({
         ModalState: false,
         isError: false,
-        Cells: [{id: 0}]
+        Cells: []
     }),
     getters: {},
     actions: {
@@ -22,14 +22,31 @@ export const useMain = defineStore('main', {
         },
         async Prepare() {
             const {get} = useCookies(['items'], {autoUpdateDependencies: false})
-            const item = get("items") as CeilItem[] | undefined
-            console.log(item)
-            for (let i = 1; i < 25; i++) {
-                if (item && item.some(p => p.id === i)) {
+            let Items = get("items") as CeilItems[] | undefined
+            if (Items === undefined) {
+                Items = [
+                    {
+                        id: 0,
+                        entry: 'GreenItem.svg',
+                        count: 0
+                    },
+                    {
+                        id: 1,
+                        entry: 'YellowItem.svg',
+                        count: 0
+                    }, {
+                        id: 2,
+                        entry: 'BlueItem.svg',
+                        count: 0
+                    }
+                ]
+            }
+            for (let i = 0; i < 25; i++) {
+                if (Items.some(p => p.id === i)) {
                     this.Cells.push({
                         id: i,
-                        ...(item.find(p => p.entry) && item.find(p => p.entry)),
-                        ...(item.find(p => p.count) && item.find(p => p.count))
+                        ...(Items.some(p => p.entry) && Items.find(p => p.id === i && p.entry)),
+                        ...(Items.some(p => p.count) && Items.find(p => p.id === i && p.count))
                     })
                 } else {
                     this.Cells.push({
