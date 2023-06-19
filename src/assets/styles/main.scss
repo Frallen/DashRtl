@@ -1,0 +1,59 @@
+@import "modern-normalize/modern-normalize.css";
+@import "_var";
+@import "_mixins";
+@import "_fonts";
+
+html {
+  font-size: 16px;
+}
+
+body {
+  overflow-x: hidden;
+  background: #1E1E1E;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.button {
+  @include trs(0.3s);
+  text-align: center;
+  display: block;
+  @include br(5px);
+  text-decoration: none;
+  padding: 8px 28px;
+  width: fit-content;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.button-primary {
+  color: #fff;
+  background: $red;
+}
+
+.button-secondary {
+  color: $black;
+  background: #fff;
+}
