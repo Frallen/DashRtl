@@ -7,7 +7,7 @@
         <path d="M16 11h2.5a2.5 2.5 0 0 1 0 5H17"/>
       </g>
     </svg>
-    <h4>Service unavailable <span>try later</span></h4>
+    <h4>Service unavailable <span>clear cookies</span></h4>
   </div>
 </template>
 <script setup lang="ts">
@@ -31,12 +31,16 @@
   h4 {
     margin: 1em 0 0;
     font-size: 2em;
-    color: #000;
+    color: #fff;
 
     span {
-      font-size:1em;
+      font-size: 1em;
       display: block;
     }
+  }
+
+  svg {
+    filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(319deg) brightness(106%) contrast(101%);
   }
 }
 </style>

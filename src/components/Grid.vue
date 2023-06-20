@@ -4,8 +4,13 @@
       <div class="grid-item" v-for="item in Cells" :key="item.id"
            @dragover.prevent
            @dragenter.prevent @drop="drop($event, item.id)">
-        <div class="item" :id="item.id" :data-entry="item.entry" :data-count="item.count" v-if="item.entry"
-             draggable="true" @dragstart="startDrag" @click="openModal(item)">
+        <div class="item" :id="item.id"
+             :data-entry="item.entry"
+             :data-count="item.count"
+             v-if="item.entry"
+             draggable="true"
+             @dragstart="startDrag"
+             @click="openModal(item)">
           <div class="item-image"><img :src='`/images/${item.entry}`' v-if="item.entry"></div>
           <div class="item-count wrapper" v-if="item.count">
             {{ item.count }}

@@ -23,62 +23,71 @@ export const useMain = defineStore('main', {
             overFlow(state)
         },
         async Prepare() {
+            try {
+                let Items = get("items") as CeilItems[] ?? []
 
-            let Items = get("items") as CeilItems[] ?? []
-
-            if (Items.length<1) {
-                Items = [
-                    {
-                        id: 0,
-                        entry: 'GreenItem.svg',
-                        count: 0
-                    },
-                    {
-                        id: 1,
-                        entry: 'YellowItem.svg',
-                        count: 0
-                    }, {
-                        id: 2,
-                        entry: 'BlueItem.svg',
-                        count: 0
-                    }
-                ]
-                set("items", Items)
-            }
-            this.Cells = []
-            for (let i = 0; i < 25; i++) {
-                if (Items.some(p => p.id === i)) {
-                    this.Cells.push({
-                        id: i,
-                        ...(Items.some(p => p.entry) && Items.find(p => p.id === i && p.entry)),
-                        ...(Items.some(p => p.count) && Items.find(p => p.id === i && p.count))
-                    })
-                } else {
-                    this.Cells.push({
-                        id: i,
-                    })
+                if (Items.length < 1) {
+                    Items = [
+                        {
+                            id: 0,
+                            entry: 'GreenItem.svg',
+                            count: 0
+                        },
+                        {
+                            id: 1,
+                            entry: 'YellowItem.svg',
+                            count: 0
+                        }, {
+                            id: 2,
+                            entry: 'BlueItem.svg',
+                            count: 0
+                        }
+                    ]
+                    set("items", Items)
                 }
-
+                this.Cells = []
+                for (let i = 0; i < 25; i++) {
+                    if (Items.some(p => p.id === i)) {
+                        this.Cells.push({
+                            id: i,
+                            ...(Items.some(p => p.entry) && Items.find(p => p.id === i && p.entry)),
+                            ...(Items.some(p => p.count) && Items.find(p => p.id === i && p.count))
+                        })
+                    } else {
+                        this.Cells.push({
+                            id: i,
+                        })
+                    }
+                }
+            } catch (e) {
+                this.isError = true
             }
-
         },
         async ChangeCount(count: number, id: number) {
-            let Items = get("items") as CeilItems[]
+            try {
+                let Items = get("items") as CeilItems[]
 
-            set("items", Items.map(p => {
-                if (p.id === id) {
-                    p.count = count
-                }
-                return p
-            }))
-            this.Prepare()
+                set("items", Items.map(p => {
+                    if (p.id === id) {
+                        p.count = count
+                    }
+                    return p
+                }))
+                this.Prepare()
+            } catch (e) {
+                this.isError = true
+            }
         },
         async DeleteCell(id: number) {
-            let Items = get("items") as CeilItems[]
+            try {
+                let Items = get("items") as CeilItems[]
 
-            set("items", Items.filter(p => p.id !== id))
-            this.ModalChanger(false)
-            this.Prepare()
+                set("items", Items.filter(p => p.id !== id))
+                this.ModalChanger(false)
+                this.Prepare()
+            } catch (e) {
+                this.isError = true
+            }
         }
     }
 
