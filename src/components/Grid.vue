@@ -70,23 +70,25 @@ const openModal = (item: CeilItems) => {
   ActiveCell.value = item
 }
 
-const drop = async (e: Event, id: number) => {
+const drop = async (e: Event, dropZoneId: number) => {
   const htmlElement = (e.currentTarget as HTMLElement)
-  htmlElement.appendChild(draggedElement.value as HTMLElement);
-  const items = get("items") as CeilItems[]
 
-  set("items", items.map(p => {
+  if (htmlElement.children.length < 1) {
+    htmlElement.appendChild(draggedElement.value as HTMLElement);
+    const items = get("items") as CeilItems[]
 
-    if (p.id === parseInt(draggedElement.value.id)) {
-      p.id = id
-      p.entry = draggedElement.value?.dataset.entry
-      p.count = parseInt(draggedElement.value?.dataset.count)
-      draggedElement.value.id = id.toString()
-    }
-    return p
-  }))
-  await Prepare()
+    set("items", items.map(p => {
 
+      if (draggedElement.value && p.id === parseInt(draggedElement.value.id)) {
+        p.id = dropZoneId
+        p.entry = draggedElement.value.dataset.entry
+        p.count = parseInt(draggedElement.value.dataset.count as string)
+        draggedElement.value.id = dropZoneId.toString()
+      }
+      return p
+    }))
+    await Prepare()
+  }
 };
 </script>
 
