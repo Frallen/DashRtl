@@ -27,7 +27,6 @@ export const useMain = defineStore('main', {
             let Items = get("items") as CeilItems[] ?? []
 
             if (Items.length<1) {
-                console.log(Items)
                 Items = [
                     {
                         id: 0,
