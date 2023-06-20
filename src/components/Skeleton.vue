@@ -25,6 +25,14 @@ const {height, width,radius} = defineProps<propsType>()
   @include br(v-bind(radius));
 }
 
+.title {
+margin: 1em 0 0;
+}
+
+.text {
+  margin: 1em;
+}
+
 @keyframes skeleton {
   0% {
     background-position: 50% 0;

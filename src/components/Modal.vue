@@ -1,15 +1,16 @@
 <template>
-  <div class="modal" v-if="isShow">
+  <transition name="rightToLeft">
+  <div class="modal" v-show="isShow">
     <div class="modal-head">
       <div class="icon" @click.stop="emit('closeModal',false)">
         <img src="/images/close.svg">
       </div>
     </div>
     <div class="modal-body">
-
       <slot></slot>
     </div>
   </div>
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -39,7 +40,6 @@ const emit = defineEmits<{ (e: "closeModal", closeModal: boolean): void }>()
   border-left: 1px solid $border;
   backdrop-filter: blur(8px);
   padding: 20px 15px;
-
   &-head {
     display: flex;
     justify-content: flex-end;
@@ -55,8 +55,6 @@ const emit = defineEmits<{ (e: "closeModal", closeModal: boolean): void }>()
       min-width: 320px;
       padding: 2em 10px 1.5em;
     }
-
-
   }
 }
 </style>

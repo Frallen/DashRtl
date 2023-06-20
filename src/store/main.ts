@@ -2,6 +2,8 @@ import {overFlow} from "../composables/mixins";
 import {CeilItems} from "../types/global.types";
 import {useCookies} from '@vueuse/integrations/useCookies'
 
+const {get, set, remove} = useCookies(['items'], {autoUpdateDependencies: true})
+
 interface stateType {
     ModalState: boolean
     isError: boolean
@@ -12,7 +14,7 @@ export const useMain = defineStore('main', {
     state: (): stateType => ({
         ModalState: false,
         isError: false,
-        Cells: []
+        Cells: [],
     }),
     getters: {},
     actions: {
@@ -21,9 +23,11 @@ export const useMain = defineStore('main', {
             overFlow(state)
         },
         async Prepare() {
-            const {get} = useCookies(['items'], {autoUpdateDependencies: false})
-            let Items = get("items") as CeilItems[] | undefined
-            if (Items === undefined) {
+
+            let Items = get("items") as CeilItems[] ?? []
+
+            if (Items.length<1) {
+                console.log(Items)
                 Items = [
                     {
                         id: 0,
@@ -40,7 +44,9 @@ export const useMain = defineStore('main', {
                         count: 0
                     }
                 ]
+                set("items", Items)
             }
+            this.Cells = []
             for (let i = 0; i < 25; i++) {
                 if (Items.some(p => p.id === i)) {
                     this.Cells.push({
@@ -56,6 +62,24 @@ export const useMain = defineStore('main', {
 
             }
 
+        },
+        async ChangeCount(count: number, id: number) {
+            let Items = get("items") as CeilItems[]
+
+            set("items", Items.map(p => {
+                if (p.id === id) {
+                    p.count = count
+                }
+                return p
+            }))
+            this.Prepare()
+        },
+        async DeleteCell(id: number) {
+            let Items = get("items") as CeilItems[]
+
+            set("items", Items.filter(p => p.id !== id))
+            this.ModalChanger(false)
+            this.Prepare()
         }
     }
 

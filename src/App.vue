@@ -7,15 +7,13 @@
         <Suspense>
           <Grid></Grid>
         </Suspense>
-        <Modal :isShow="ModalState" @closeModal="ModalChanger"></Modal>
       </div>
       <Search class="dashboard-search"></Search>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-const {isError, ModalState} = storeToRefs(useMain())
-const {ModalChanger} = useMain()
+const {isError} = storeToRefs(useMain())
 </script>
 <style lang="scss">
 .dashboard {
@@ -27,17 +25,19 @@ const {ModalChanger} = useMain()
       "info body body"
       "search search search";
   grid-template-columns: 1fr 3fr;
-
+  height: 90vh;
   &-info {
     grid-area: info;
   }
 
   &-body {
     grid-area: body;
+    height: 100%;
   }
 
   &-search {
     grid-area: search;
+    height: fit-content;
   }
 
 }
